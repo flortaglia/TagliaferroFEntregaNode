@@ -38,7 +38,7 @@ class Contenedor{
                 thumbnail,
                 description, 
                 code,
-                timestamp, 
+                timestamp:Date.now(), 
                 stock,
                 id:1
             }
@@ -53,7 +53,7 @@ class Contenedor{
             thumbnail,
             description, 
             code,
-            timestamp,
+            timestamp:Date.now(),
             stock,
             id:Index
             }

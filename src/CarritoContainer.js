@@ -1,63 +1,64 @@
 class CarritoContainer{
     constructor(){
-        this.cart= [];
+        this.carts= [];
     }
    
-    getById(id){
-        const elemento = this.productos.filter(producto=> producto.id === id)
-        console.log(elemento)
-        return elemento   
+    getCartById(id){
+        const carrito = this.carts.filter(cart=> cart.id === id)
+        console.log(carrito)
+        return carrito   
     }
-    getAll(){
-        return this.productos
+    getAllCarts(){
+        return this.carts
     }
-    deleteById(id){
-        const objeto = this.productos.filter(item=>item.id!=id)
-        this.productos = objeto  
+    deleteCartById(id){
+        const objeto = this.carts.filter(item=>item.id!=id)
+        this.carts = objeto  
     }
-    
-    update(id, title, description, code, price, thumbnail, timestamp, stock){
+    deleteProductofCartById(id,id_prod){
+        const index=this.carts.findIndex(element=>element.id==id)
+        const finalCart= this.carts[index].products.filter(item=>item.id!=id_prod)
+        console.log(finalCart)
+        this.carts[index].products=finalCart
+    }
+    insertProductById(id,productInsert){
+        const index=this.carts.findIndex(element=>element.id==id)
+        this.carts[index].products.push(productInsert) 
+    }
+
+    // update(id,producto){
         
-        const index=this.productos.findIndex(element=>element.id==id)
-        console.log(index)
-        this.productos[index].title=title
-        this.productos[index].price=price
-        this.productos[index].thumbnail=thumbnail
-        this.productos[index].description=description
-        this.productos[index].code=code
-        this.productos[index].stock=stock
-        this.productos[index].timestamp=timestamp
+    //     const index=this.carts.findIndex(element=>element.id==id)
+    //     console.log(index)
+    //     this.carts[index].push(producto)}
+        // this.carts[index].price=price
+        // this.carts[index].thumbnail=thumbnail
+    //     this.carts[index].description=description
+    //     this.carts[index].code=code
+    //     this.carts[index].stock=stock
+    //     this.carts[index].timestamp=timestamp
       
-        console.log(this.productos)        
-    }
-    newProduct(title, description, code, price, thumbnail, timestamp, stock){
-        if(this.productos.length==0){
+    //     console.log(this.carts)        
+    // }
+
+    newCart(){
+        if(this.carts.length==0){
             const elemento = {
-                title,
-                price,
-                thumbnail,
-                description, 
-                code,
-                timestamp, 
-                stock,
-                id:1
+                timestamp:Date.now(), 
+                id:1,
+                products:[]
             }
-            this.productos.push(elemento)
+            this.carts.push(elemento)
             return elemento
         }else{
-           const lastIndex = this.productos[this.productos.length-1].id
+           const lastIndex = this.carts[this.carts.length-1].id
            const Index= lastIndex + 1
            const elemento = {
-            title,
-            price,
-            thumbnail,
-            description, 
-            code,
-            timestamp,
-            stock,
-            id:Index
+            timestamp:Date.now(),
+            id:Index,
+            products:[]
             }
-            this.productos.push(elemento)
+            this.carts.push(elemento)
             return elemento
         }
     }

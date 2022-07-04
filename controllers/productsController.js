@@ -5,7 +5,7 @@ const productos = new Contenedor()
 const getProductos = (req, res) => {
     const verProductos= productos.getAll()
     
-    res.json(productos.getAll())
+    res.json(verProductos)
     // res.render('productos.hbs',{verProductos})
 }
 
@@ -50,6 +50,7 @@ module.exports = {
     postProductos,
     getProductoId,
     putProduct,
-    deleteProduct
+    deleteProduct,
+    productos
     // mostrarForm
 }
