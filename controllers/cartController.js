@@ -1,14 +1,15 @@
 const CarritoContainer = require('../src/CarritoContainer')
 const Contenedor = require('../src/Contenedor')
 const isNumber = require('is-number');
-const { productos } = require('./productsController')
-
+const { productosContenedor } = require('./productsController')
+const {escribir}= require ('../persistencia/persistencia')
  
 const carts = new CarritoContainer()
 
 const postCarrito = (req, res)=>{
     // const {timestamp} = req.body //ver preguntar
     const elemento = carts.newCart()
+    escribir('listaCarritos',carts.getAllCarts())
     res.json(elemento)
 }
 
@@ -25,6 +26,7 @@ const deleteCarrito = (req, res) => {
     if(!elemento.length){return res.status(404).json({error: "Carrito no encontrado"})}
     if(!isNumber(id)){return res.json({ error: "El parámetro no es un número o el id no existe" })}
     carts.deleteCartById(id)
+    escribir('listaCarritos',carts.getAllCarts())
     res.json(carts.getAllCarts())
 }
 
@@ -37,12 +39,12 @@ const insertProductoByIdToCart = (req,res)=>{
     if(!elemento.length){return res.status(404).json({error: "Carrito no encontrado"})}
     
     console.log("imprimo id_prod",id)
-    const productInsert= productos.getById(id)
+    const productInsert= productosContenedor.getById(id)
     const item=productInsert[0]
     console.log("imprimo prod",item) 
     if(!isNumber(id_cart)){return res.json({ error: "El parámetro no es un número o el id no existe" })}
     if(!isNumber(id)|| productInsert.length==0){return res.json({ error: "El producto no existe" })}
-    
+    escribir('listaCarritos',carts.getAllCarts())
     res.json(carts.insertProductById(id_cart,item))
     
 
@@ -51,10 +53,10 @@ const insertProductoByIdToCart = (req,res)=>{
 const deleteProductoCarrito = (req, res)=>{
     const id=Number(req.params.id)
     const id_prod= Number(req.params.id_prod)
-    const productdelete= productos.getById(id_prod)
+    const productdelete= productosContenedor.getById(id_prod)
     if(!isNumber(id)){return res.json({ error: "El parámetro no es un número o el id no existe" })}
     if(!isNumber(id_prod)|| productdelete.length==0){return res.json({ error: "El producto no existe" })}
-    
+    escribir('listaCarritos',carts.getAllCarts())
      res.json(carts.deleteProductofCartById(id,id_prod))
     
 }

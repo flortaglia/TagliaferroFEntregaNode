@@ -1,17 +1,21 @@
 const Contenedor = require('../src/Contenedor')
 const isNumber = require('is-number');
-const productos = new Contenedor()
+const productosContenedor = new Contenedor()
+const {escribir}= require ('../persistencia/persistencia')
 
 const getProductos = (req, res) => {
-    const verProductos= productos.getAll()
-    
+    const verProductos= productosContenedor.getAll()
+  
     res.json(verProductos)
     // res.render('productos.hbs',{verProductos})
 }
 
 const postProductos = (req, res) => {
     const {title, description, code, price, thumbnail, timestamp, stock} = req.body 
-    const elemento = productos.newProduct(title, description, code, price, thumbnail, timestamp, stock)
+    const elemento = productosContenedor.newProduct(title, description, code, price, thumbnail, timestamp, stock)
+    escribir('listaProductos',productosContenedor.getAll())
+    
+    
     res.json(elemento)
     // res.redirect('/api/productos')
     // res.statusCode=201
@@ -19,26 +23,29 @@ const postProductos = (req, res) => {
 const getProductoId = (req, res) => {
     const id = Number(req.params.id)
     if(!isNumber(id)){return res.json({ error: "El parámetro no es un número" })}
-    const elemento = productos.getById(id)
+    const elemento = productosContenedor.getById(id)
     if(!elemento.length){return res.status(404).json({error: "Producto no encontrado"})}
+   
     res.json(elemento)
 }
 const putProduct = (req, res) => {
     const {title, description, code, price, thumbnail, timestamp, stock} = req.body
     const id = Number(req.params.id)
     if(!isNumber(id)){return res.json({ error: "El parámetro no es un número" })}
-    const elemento = productos.getById(id)
+    const elemento = productosContenedor.getById(id)
     if(!elemento.length){return res.status(404).json({error: "Producto no encontrado"})}
-    productos.update(id,title, description, code, price, thumbnail, timestamp, stock)
-    const elementChanged = productos.getById(id)
+    productosContenedor.update(id,title, description, code, price, thumbnail, timestamp, stock)
+    const elementChanged = productosContenedor.getById(id)
+    escribir('listaProductos',productosContenedor.getAll())
     res.json(elementChanged)
     
 }
 const deleteProduct = (req, res) => {
     const id = Number(req.params.id)
     if(!isNumber(id)|| !id){return res.json({ error: "El parámetro no es un número o el id no existe" })}
-    productos.deleteById(id)
-    res.json(productos.getAll())
+    productosContenedor.deleteById(id)
+    escribir('listaProductos',productosContenedor.getAll())
+    res.json(productosContenedor.getAll())
 }
 // const mostrarForm =(req,res)=>{
 //     res.render('form.hbs')
@@ -51,6 +58,6 @@ module.exports = {
     getProductoId,
     putProduct,
     deleteProduct,
-    productos
+    productosContenedor
     // mostrarForm
 }

@@ -1,8 +1,21 @@
+const fs =require('fs')
+const path = require('path')
+
 class Contenedor{
     constructor(){
         this.productos= [];
     }
    
+    escribir = async ()=>{
+        try{
+            console.log('esto es lo que traigo en item:')
+            await fs.promises.writeFile(path.join(__dirname,`/Listaproducto`), JSON.stringify(this.producto,null,'\t'))
+            console.log('guardado')
+        }catch(err){
+            console.log('no se pudo guardar el producto', err)
+        }
+    
+    }
     getById(id){
         const elemento = this.productos.filter(producto=> producto.id === id)
         console.log(elemento)

@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const rutas = require('./src/routes/index')
-const puerto =8080 //para developer.......falta ver la parte de produccion como se hace???
+const puerto =process.env.PORT||8080     
 const path = require('path')
 const {engine}= require("express-handlebars")
 
@@ -19,16 +19,25 @@ app.engine(
 );
 app.set('views', path.join(__dirname, './views'))
 app.set('view engine', 'hbs')
-// app.use('/views', express.static(`${__dirname}/views`))
 
 app.use('/api', rutas)
+const error404= (req, res,next)=>{
+    let mensajeError={
+        error : "-2",
+        descripcion: `ruta: ${req.url} método: ${req.method} no implementado`
+    }
+    res.status(404).json( mensajeError)
+    next()
+} 
+//Ruta NO encontrada
+app.use(error404)
 
 
 // app.use((error, req, res) => {
 //     res.status(error.httpStatusCode).send(error)
 // })
 
-app.listen(puerto, (err) => {
+const server = app.listen(puerto, (err) => {
     if(err) {
         console.log(`Se produjo un error al iniciar el servidor: ${err}`)
     } else {
