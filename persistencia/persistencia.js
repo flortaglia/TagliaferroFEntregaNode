@@ -12,5 +12,16 @@ const escribir= async (filename,item)=>{
     }
 
 }
+const leer = async (filename)=>{
+    try{
+        const data= await fs.promises.readFile(path.join(__dirname,`/${filename}`), 'utf-8')
+        const contenido= json.parse(data)
+        return contenido
+        
+    }catch(err){
+        console.log('no se pudo guardar el producto', err)
+    }
+
+}
 
 module.exports = {escribir}
