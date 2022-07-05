@@ -15,13 +15,17 @@ const escribir= async (filename,item)=>{
 const leer = async (filename)=>{
     try{
         const data= await fs.promises.readFile(path.join(__dirname,`/${filename}`), 'utf-8')
-        const contenido= json.parse(data)
+        console.log(data)
+        const contenido= JSON.parse(data)
+        console.log('contenido es ',typeof(contenido))
         return contenido
         
     }catch(err){
-        console.log('no se pudo guardar el producto', err)
+        console.log('no se pudo leer el producto', err)
+        return contenido=[]
     }
 
 }
+
 
 module.exports = {escribir,leer}

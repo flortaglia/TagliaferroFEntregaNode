@@ -21,6 +21,7 @@ app.use(express.urlencoded({ extended: true }))
 // app.set('view engine', 'hbs')
 
 app.use('/api', rutas)
+
 const error404= (req, res,next)=>{
     let mensajeError={
         error : "-2",

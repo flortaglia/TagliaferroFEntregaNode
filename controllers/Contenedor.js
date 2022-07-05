@@ -1,6 +1,6 @@
 const fs =require('fs')
 const path = require('path');
-const {leer}= require ('../persistencia/persistencia')
+const {leer, escribir}= require ('../persistencia/persistencia')
 
 class Contenedor{
     constructor(){
@@ -15,16 +15,19 @@ class Contenedor{
     }
     async getAll(){
         this.productos = await leer('listaProductos')
+        console.log('leo',this.productos)
         return this.productos
     }
     async deleteById(id){
         this.productos = await leer('listaProductos')
         const objeto = this.productos.filter(item=>item.id!=id)
-        this.productos = objeto  
+        this.productos = objeto 
+        escribir('listaProductos',this.productos) 
     }
     
     async update(id, title, description, code, price, thumbnail, timestamp, stock){
         this.productos = await leer('listaProductos')
+        console.log(typeof(this.product))
         const index=this.productos.findIndex(element=>element.id==id)
         console.log(index)
         this.productos[index].title=title
@@ -34,7 +37,7 @@ class Contenedor{
         this.productos[index].code=code
         this.productos[index].stock=stock
         this.productos[index].timestamp=timestamp
-      
+        await escribir('listaProductos',this.productos)
         console.log(this.productos)        
     }
     async newProduct(title, description, code, price, thumbnail, timestamp, stock){
@@ -51,6 +54,7 @@ class Contenedor{
                 id:1
             }
             this.productos.push(elemento)
+            await escribir('listaProductos',this.productos)
             return elemento
         }else{
            const lastIndex = this.productos[this.productos.length-1].id
@@ -66,6 +70,7 @@ class Contenedor{
             id:Index
             }
             this.productos.push(elemento)
+            await escribir('listaProductos',this.productos)
             return elemento
         }
     }
