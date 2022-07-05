@@ -1,11 +1,10 @@
-const Contenedor = require('../src/Contenedor')
+const Contenedor = require('./Contenedor')
 const isNumber = require('is-number');
 const productosContenedor = new Contenedor()
 const {escribir}= require ('../persistencia/persistencia')
 
 const getProductos = (req, res) => {
     const verProductos= productosContenedor.getAll()
-  
     res.json(verProductos)
     // res.render('productos.hbs',{verProductos})
 }
@@ -14,8 +13,6 @@ const postProductos = (req, res) => {
     const {title, description, code, price, thumbnail, timestamp, stock} = req.body 
     const elemento = productosContenedor.newProduct(title, description, code, price, thumbnail, timestamp, stock)
     escribir('listaProductos',productosContenedor.getAll())
-    
-    
     res.json(elemento)
     // res.redirect('/api/productos')
     // res.statusCode=201
@@ -25,7 +22,6 @@ const getProductoId = (req, res) => {
     if(!isNumber(id)){return res.json({ error: "El parámetro no es un número" })}
     const elemento = productosContenedor.getById(id)
     if(!elemento.length){return res.status(404).json({error: "Producto no encontrado"})}
-   
     res.json(elemento)
 }
 const putProduct = (req, res) => {
@@ -51,7 +47,6 @@ const deleteProduct = (req, res) => {
 //     res.render('form.hbs')
 // }
 
-
 module.exports = {
     getProductos,
     postProductos,
@@ -59,5 +54,4 @@ module.exports = {
     putProduct,
     deleteProduct,
     productosContenedor
-    // mostrarForm
 }

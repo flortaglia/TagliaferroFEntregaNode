@@ -4,12 +4,12 @@ const { getProductos, postProductos, getProductoId,
             putProduct,deleteProduct} = require('../../controllers/productsController')
 const { postCarrito, deleteCarrito, verCarrito, 
     insertProductoByIdToCart, deleteProductoCarrito} = require('../../controllers/cartController')
+
 //Rutas Productos
 router.get('/productos', getProductos)
 router.get('/productos/:id', getProductoId)
-
-
 // router.get('/productos', mostrarForm)
+
 //Rutas Carrito
 router.post('/carrito', postCarrito) 
 router.delete('/carrito/:id', deleteCarrito )

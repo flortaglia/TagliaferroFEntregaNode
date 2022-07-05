@@ -1,5 +1,5 @@
-const CarritoContainer = require('../src/CarritoContainer')
-const Contenedor = require('../src/Contenedor')
+const CarritoContainer = require('./CarritoContainer')
+const Contenedor = require('./Contenedor')
 const isNumber = require('is-number');
 const { productosContenedor } = require('./productsController')
 const {escribir}= require ('../persistencia/persistencia')

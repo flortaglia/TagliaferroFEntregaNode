@@ -26,21 +26,6 @@ class CarritoContainer{
         this.carts[index].products.push(productInsert) 
     }
 
-    // update(id,producto){
-        
-    //     const index=this.carts.findIndex(element=>element.id==id)
-    //     console.log(index)
-    //     this.carts[index].push(producto)}
-        // this.carts[index].price=price
-        // this.carts[index].thumbnail=thumbnail
-    //     this.carts[index].description=description
-    //     this.carts[index].code=code
-    //     this.carts[index].stock=stock
-    //     this.carts[index].timestamp=timestamp
-      
-    //     console.log(this.carts)        
-    // }
-
     newCart(){
         if(this.carts.length==0){
             const elemento = {

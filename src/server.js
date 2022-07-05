@@ -1,24 +1,24 @@
 const express = require('express')
 const app = express()
-const rutas = require('./src/routes/index')
+const rutas = require('./routes/index')
 const puerto =process.env.PORT||8080     
 const path = require('path')
 const {engine}= require("express-handlebars")
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.engine(
-    "hbs",
-    engine({
-        extname:".hbs",
-        defaultLayout:'index.hbs',
-        layoutsDir:__dirname + "/views/layouts",
-        partialsDir:__dirname + '/views/partials/'
+// app.engine(
+//     "hbs",
+//     engine({
+//         extname:".hbs",
+//         defaultLayout:'index.hbs',
+//         layoutsDir:__dirname + "/views/layouts",
+//         partialsDir:__dirname + '/views/partials/'
 
-    })
-);
-app.set('views', path.join(__dirname, './views'))
-app.set('view engine', 'hbs')
+//     })
+// );
+// app.set('views', path.join(__dirname, './views'))
+// app.set('view engine', 'hbs')
 
 app.use('/api', rutas)
 const error404= (req, res,next)=>{
