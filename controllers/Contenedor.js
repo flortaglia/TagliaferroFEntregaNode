@@ -1,6 +1,6 @@
 const fs =require('fs')
 const path = require('path');
-const { listenerCount } = require('process');
+const {leer}= require ('../persistencia/persistencia')
 
 class Contenedor{
     constructor(){

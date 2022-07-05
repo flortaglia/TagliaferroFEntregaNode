@@ -24,4 +24,4 @@ const leer = async (filename)=>{
 
 }
 
-module.exports = {escribir}
+module.exports = {escribir,leer}

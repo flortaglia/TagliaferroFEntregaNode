@@ -1,3 +1,4 @@
+const {leer}= require ('../persistencia/persistencia')
 class CarritoContainer{
     constructor(){
         this.carts= [];
