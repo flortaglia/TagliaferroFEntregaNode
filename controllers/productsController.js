@@ -1,7 +1,6 @@
 const Contenedor = require('./Contenedor')
 const isNumber = require('is-number');
 const productosContenedor = new Contenedor()
-const {escribir}= require ('../persistencia/persistencia')
 
 const getProductos = async (req, res) => {
     const verProductos= await productosContenedor.getAll()

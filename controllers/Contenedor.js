@@ -1,5 +1,3 @@
-const fs =require('fs')
-const path = require('path');
 const {leer, escribir}= require ('../persistencia/persistencia')
 
 class Contenedor{
@@ -22,7 +20,7 @@ class Contenedor{
         this.productos = await leer('listaProductos')
         const objeto = this.productos.filter(item=>item.id!=id)
         this.productos = objeto 
-        escribir('listaProductos',this.productos) 
+        await escribir('listaProductos',this.productos) 
     }
     
     async update(id, title, description, code, price, thumbnail, timestamp, stock){

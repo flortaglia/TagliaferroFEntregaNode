@@ -1,4 +1,5 @@
-const {leer}= require ('../persistencia/persistencia')
+const {leer, escribir}= require ('../persistencia/persistencia')
+
 class CarritoContainer{
     constructor(){
         this.carts= [];
@@ -17,7 +18,8 @@ class CarritoContainer{
     async deleteCartById(id){
         this.carts = await leer('listaCarritos')
         const objeto = this.carts.filter(item=>item.id!=id)
-        this.carts = objeto  
+        this.carts = objeto 
+        await escribir('listaCarritos',this.carts)  
     }
     async deleteProductofCartById(id,id_prod){
         this.carts = await leer('listaCarritos')
@@ -25,11 +27,13 @@ class CarritoContainer{
         const finalCart= this.carts[index].products.filter(item=>item.id!=id_prod)
         console.log(finalCart)
         this.carts[index].products=finalCart
+        await escribir('listaCarritos',this.carts) 
     }
     async insertProductById(id,productInsert){
         this.carts = await leer('listaCarritos')
         const index=this.carts.findIndex(element=>element.id==id)
-        this.carts[index].products.push(productInsert) 
+        this.carts[index].products.push(productInsert)
+        await escribir('listaCarritos',this.carts)  
     }
 
     async newCart(){
@@ -41,6 +45,7 @@ class CarritoContainer{
                 products:[]
             }
             this.carts.push(elemento)
+            await escribir('listaCarritos',this.carts)
             return elemento
         }else{
            const lastIndex = this.carts[this.carts.length-1].id
@@ -51,6 +56,7 @@ class CarritoContainer{
             products:[]
             }
             this.carts.push(elemento)
+            await escribir('listaCarritos',this.carts)
             return elemento
         }
     }
